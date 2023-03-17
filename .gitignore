@@ -1,5 +1,4 @@
 .vscode/
-.env
 db/data/
 
 #### PYTHON GITIGNORE ####
@@ -125,7 +124,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
