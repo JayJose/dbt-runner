@@ -2,15 +2,38 @@ version: '3.9'
 
 services:
 
-  # api:
-  #   container_name: api
-  #   build: ./api
-  #   ports:
-  #     - 80:80
-  #   volumes:
-  #     - ./api:/usr/src/app   
-  #   env_file:
-  #     - .env
+  api:
+    container_name: api
+    build: ./api
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    restart: unless-stopped
+    volumes:
+      - ./api:/usr/src/app
+
+  app:
+    container_name: app
+    build: ./app
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+
+  db:
+    build: ./db
+    container_name: db
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    volumes:
+      - ./db/data:/var/lib/postgresql/data 
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
 
   # worker:
   #   build: .
@@ -22,12 +45,3 @@ services:
   #   depends_on:
   #     - api
   #     - redis
-
-  redis:
-    image: redis:7-alpine  
-    
-  app:
-    container_name: app
-    build: ./app
-    ports:
-      - 3000:3000
